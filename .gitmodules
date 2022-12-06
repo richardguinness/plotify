@@ -1,0 +1,3 @@
+[submodule "plotify-streamlit"]
+	path = plotify-streamlit
+	url = https://github.com/nitrobear95/plotify-streamlit
