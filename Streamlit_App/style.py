@@ -2,8 +2,8 @@
 
 def get_css():
     return """
-<style>
 
+<style>
 
 div.css-hxt7ib {
     padding-top:2rem;
@@ -56,7 +56,7 @@ div.st-cz {
 }
 
 div.css-12oz5g7 {
-    padding: 3rem 1rem 10rem
+    padding: 3rem 1rem 10rem;
 }
 
 .css-1v0mbdj {
@@ -88,5 +88,5 @@ p {
 }
 
 
-<style>
+</style>
 """

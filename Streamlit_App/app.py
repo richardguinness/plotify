@@ -4,36 +4,20 @@ from style import get_css
 import time
 import requests
 import yake
+import requests
 
 
 ## API SETUP
-
-def get_text_api():
-    url = "https://gpt-summarization.p.rapidapi.com/summarize"
-
-    payload = {
-        "text": input1,
-        "num_sentences": 1}
-
-    headers = {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": "1688bcf98dmsh0dde3eda4f0374ap15d984jsnbb0c2deccb48",
-        "X-RapidAPI-Host": "gpt-summarization.p.rapidapi.com"
-        }
-
-    response = requests.request("POST", url, json=payload, headers=headers)
-
-    return response.text
 
 
 def get_keywords():
 
     kw_extractor = yake.KeywordExtractor()
-    text = input1
+    text = output
     language = "en"
     max_ngram_size = 3
     deduplication_threshold = 0.15
-    numOfKeywords = 8
+    numOfKeywords = 6
     custom_kw_extractor = yake.KeywordExtractor(lan=language, n=max_ngram_size, dedupLim=deduplication_threshold, top=numOfKeywords, features=None, stopwords=None)
     keywords = custom_kw_extractor.extract_keywords(text)
 
@@ -42,12 +26,28 @@ def get_keywords():
     return keyword_list
 
 
+def get_text_api():
+
+
+    url = "https://plotifymodel-b4p33xwhra-ez.a.run.app/generate_summary?"
+
+    param = {'genre': input2.lower(),
+                'prompt': input1,
+                'max_length': 250}
+
+    x = requests.get(url, params=param).json()
+
+    return x['generate_summary'][0]['generated_text'].split('|>',1)[1]
+
+
+
+
 ## SITE CONFIG
 
 # set the config for the page. App themes in .streamlit/config.toml
 st.set_page_config(
             page_title="Plotify - create your story", # => Quick reference - Streamlit
-            page_icon="../assets/plotify_logo_small.png",
+            page_icon="Streamlit_App/assets/plotify_logo_small.png",
             layout="wide", # wide
             initial_sidebar_state="expanded") # collapsed
 
@@ -55,11 +55,12 @@ st.set_page_config(
 st.markdown(get_css(), unsafe_allow_html=True)
 
 
+
 ## SIDEBAR
 
 # Assets: Logo + headertext(plotify - create your story)
 with st.sidebar.container():
-    image = Image.open("assets/plotify_logocomplete.png")
+    image = Image.open("Streamlit_App/assets/plotify_logocomplete.png")
     st.image(image, use_column_width=True) #, caption ='Plotify - create your story'
 
 
@@ -97,8 +98,9 @@ with st.sidebar.form("user_input_form"):
 
 # Assets: borders top, right and bottom
 # Assets: Headertext (your plotify-board)
-image = Image.open("assets/plotify_pageheadertext.png")
+image = Image.open("Streamlit_App/assets/plotify_pageheadertext.png")
 st.image(image,  use_column_width=None)
+
 
 
 # Output 1: Summary Text
