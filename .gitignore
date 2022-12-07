@@ -1,4 +1,5 @@
 Datasets/
 raw_data/
-
+.env
 SECRETS.toml
+.DS_Store

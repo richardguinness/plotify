@@ -1,3 +1,8 @@
 pandas
 numpy
 re
+yake
+time
+streamlit
+PIL
+
