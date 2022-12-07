@@ -1,8 +1,0 @@
-pandas
-numpy
-PIL
-time
-
-requests
-
-streamlit

@@ -1,7 +1,12 @@
 pandas
 numpy
 re
+
 yake
 time
 streamlit
 Pillow
+
+requests
+
+streamlit

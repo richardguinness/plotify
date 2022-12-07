@@ -11,10 +11,11 @@ import replicate
 from dotenv import load_dotenv, find_dotenv
 import os
 
+
 def get_image_api(prompt):
     prompt = f'{output_topics}, illustration, book cover, no text'
-    envpath = find_dotenv()
-    load_dotenv(envpath)
+    #envpath = find_dotenv()
+    #load_dotenv(envpath)
     replicate.Client(api_token=os.getenv("REPLICATE_API_KEY"))
     model = replicate.models.get("stability-ai/stable-diffusion")
     version = model.versions.get("0827b64897df7b6e8c04625167bbb275b9db0f14ab09e2454b9824141963c966")
@@ -22,6 +23,9 @@ def get_image_api(prompt):
     print(image_url)
     print(image_url[0])
     return image_url
+
+
+
 
 
 def get_keywords():
@@ -40,6 +44,7 @@ def get_keywords():
     return keyword_list
 
 
+
 def display_image(image_url):
   # Make a GET request to the URL to retrieve the image data
   response = requests.get(image_url[0])
@@ -51,6 +56,7 @@ def display_image(image_url):
 #   print('display image works')
   return image
 
+
 def get_text_api():
 
 
@@ -58,7 +64,7 @@ def get_text_api():
 
     param = {'genre': input2.lower(),
                 'prompt': input1,
-                'max_length': 250}
+                'max_length': 150}
 
     x = requests.get(url, params=param).json()
     # print('get text api works')
@@ -72,7 +78,7 @@ def get_text_api():
 # set the config for the page. App themes in .streamlit/config.toml
 st.set_page_config(
             page_title="Plotify - create your story", # => Quick reference - Streamlit
-            #page_icon="Streamlit_App/assets/plotify_logo_small.png",
+            page_icon="streamlit_assets/plotify_logo_small.png",
             layout="wide", # wide
             initial_sidebar_state="expanded") # collapsed
 
@@ -85,9 +91,8 @@ st.markdown(get_css(), unsafe_allow_html=True)
 
 # Assets: Logo + headertext(plotify - create your story)
 with st.sidebar.container():
-    #image = Image.open("Streamlit_App/assets/plotify_logocomplete.png")
-    #st.image(image, use_column_width=True) #, caption ='Plotify - create your story'
-    st.write('Hello, welcome to Plotify! 🎉')
+    image = Image.open("streamlit_assets/plotify_logocomplete.png")
+    st.image(image, use_column_width=True) #, caption ='Plotify - create your story'
 
 
 # User Input Generic: Start API to return story with no prompts
@@ -123,8 +128,8 @@ with st.sidebar.form("user_input_form"):
 
 # Assets: borders top, right and bottom
 # Assets: Headertext (your plotify-board)
-#image = Image.open("Streamlit_App/assets/plotify_pageheadertext.png")
-#st.image(image,  use_column_width=None)
+image = Image.open("streamlit_assets/plotify_pageheadertext.png")
+st.image(image,  use_column_width=None)
 
 
 
