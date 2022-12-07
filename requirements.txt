@@ -4,5 +4,4 @@ re
 yake
 time
 streamlit
-PIL
-
+Pillow
