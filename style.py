@@ -7,7 +7,7 @@ def get_css():
 
 /* header padding*/
 div.css-1vq4p4l {
-    padding-top:2rem;
+    padding-top:1.5rem;
 }
 
 /* buttons */
@@ -30,8 +30,14 @@ div.css-1ux96mu {
     color: white;
 }
 
+/* change width of main body header text */
 .css-1v0mbdj {
-    width: 40%;
+    width: 30%;
+}
+
+/* reduce main body gap at the top */
+.css-18e3th9 {
+    padding: 3rem 2rem 2rem;
 }
 
 
@@ -71,7 +77,31 @@ h5 {
     word-spacing: 0.1rem;
 }
 
+h2 {
+    font-weight: 200;
+    font-size: large;
+    letter-spacing: -0.005em;
+    padding: 0rem 0px;
+    line-height: 1.5;
+}
 
+.st-ck {
+    color:black;
+}
+
+.css-183lzff {
+    font-family: sans-serif;
+    white-space: pre;
+    font-size: 18px;
+    overflow-x: auto;
+    font-stretch: expanded;
+    padding-left: 0.2rem;
+    padding-top: 1rem;
+    padding-right: 0.6rem
+    line-height: 2rem;
+    text-align:center;
+    color:#af1102;
+}
 
 </style>
 """
