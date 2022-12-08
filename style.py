@@ -72,11 +72,12 @@ h4 {
 }
 
 h5 {
-    font-weight: 50;
+    font-weight: 600;
     color: #af1102;
     letter-spacing: -0.04rem;
     word-spacing: 0.1rem;
 }
+
 
 h2 {
     font-weight: 200;

@@ -27,7 +27,6 @@ def get_image_api(prompt):
     return image_url
 
 
-
 # function to return text keywords
 def get_keywords():
     kw_extractor = yake.KeywordExtractor()
@@ -42,6 +41,8 @@ def get_keywords():
     keyword_list = [x[0] for x in keywords]
 
     return keyword_list
+
+
 
 
 # api to get images based on keywords
