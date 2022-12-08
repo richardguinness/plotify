@@ -1,12 +1,7 @@
 pandas
 numpy
 regex
-
 yake
-time
 streamlit
 Pillow
-
 requests
-
-streamlit
