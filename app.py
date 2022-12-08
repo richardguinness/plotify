@@ -15,7 +15,7 @@ import os
 
 # api to return text summary
 def get_image_api(prompt):
-    prompt = f'{output_topics}, realistic, digital illustration, no text, in the style of Roald Dahl'
+    prompt = f'{output_topics}, realistic, digital illustration, no text'
     envpath = find_dotenv()
     load_dotenv(envpath)
     replicate.Client()
