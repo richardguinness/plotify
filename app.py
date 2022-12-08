@@ -43,6 +43,8 @@ def get_keywords():
     return keyword_list
 
 
+
+
 # api to get images based on keywords
 def get_text_api():
 
