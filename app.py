@@ -51,11 +51,37 @@ def get_text_api():
 
     param = {'genre': input3,
                 'prompt': input1,
-                'max_length': 200}
+                'max_length': 180}
 
-    x = requests.get(url, params=param).json()
+    # x = requests.get(url, params=param).json()
     # print('get text api works')
-    return x['generate_summary'][0]['generated_text'].split('|>',1)[1]
+    # x['generate_summary'][0]['generated_text'].split('|>',1)[1]
+
+    output = requests.get(url, params=param).json()
+    output = output['generate_summary'][0]['generated_text']
+    # print('type(output)', type(output[0]['generated_text']))
+    # Trim output to last occurance of full stop (if any)
+    pos = output.rfind(".") # find position of last full stop
+    output = output[:pos+1] if pos != -1 else output
+
+    # Trim token
+    pos = output.rfind(">") # find position of first >
+    output = output[pos+1:] if pos != -1 else output
+    output= output.strip()
+
+    # Deal with occurences of floating letters
+    output = output.replace(" s ", "'s ")
+    output = output.replace(" t ", "'t ")
+    output = output.replace(" ve ", "'ve ")
+    output = output.replace(" nt ", "'nt ")
+    output = output.replace(" re ", "'re ")
+
+    # Remove space (from Sarah. Orig punct list: ?.!,")
+    output = re.sub(r'\s([!?.,;-](?:\s|$))', r'\1', output)
+
+    # output = [{'generated_text':output}]
+
+    return output
 
 
 # function to display images
@@ -106,7 +132,7 @@ with st.sidebar.form("no_user_input_form"):
 with st.sidebar.form("user_input_form"):
 
     # Input 1: Text Box: prompt to input short text, limit
-    input1 = st.text_area('got the start of an idea?', height=150, max_chars = 1000)
+    input1 = st.text_area('got the start of an idea?', height=120, max_chars = 150)
 
     # Input 2: Radio buttons: choose genre
     input2 = st.radio('select your genre:',
@@ -117,8 +143,7 @@ with st.sidebar.form("user_input_form"):
                         'Fantasy 🚀',
                         'Horror 👻',
                         'Mystery 😵‍💫',
-                        'Romance 😘',
-                        'Young Adult 😎'))
+                        'Romance 😘'))
 
     genre_dict = {'Action 🤯': 'action',
               'Comedy 🤣': 'comedy',
@@ -127,8 +152,7 @@ with st.sidebar.form("user_input_form"):
               'Fantasy 🚀': 'fantasy' ,
               'Horror 👻': 'horror',
               'Mystery 😵‍💫': 'mystery',
-              'Romance 😘': 'romance',
-              'Young Adult 😎': 'childrens literature'}
+              'Romance 😘': 'romance'}
 
     if input2:
         input3 = genre_dict.get(input2)
@@ -155,40 +179,33 @@ with st.container():
 
     # button with inputs selected
     if submitted_inputs:
+
         # calls the first api to generate the output text
         with st.spinner("hold the pen, we're doing some plotting..."):
             output = get_text_api()
             if output:
                 st.markdown(''' ##### your plotify story:  ''')
-                st.write(output)
+                st.write(''' ##''', output)
             else:
                 st.error("Hmm, i'm stumped for a plot, awks!😬")
 
         st.markdown(''' # ''')
+        st.markdown("##### your plot images & keywords:")
 
         # generates two more columns for keywords and image generation
         with st.container():
-            col1, col2 = st.columns([1,4])
-
-            # keyword generation
-            with col1:
-                if output:
-                    st.markdown(''' ##### your plot keywords: ''')
-                with col2:
-                    output_topics = get_keywords()
-                    st.markdown(", ".join(output_topics))
-
-            st.markdown(''' # ''')
-            # image generation
-            #with col2:
             if output:
                 with st.container():
-                    col1, col2, col3, col4 = st.columns(4)
-                    col1.markdown("##### your plot images:")
+                    col1, col2, col3 = st.columns([1,3,3])
                 with st.spinner("just grabbing a little extra inspiration..."):
-                    col2.image(display_image(get_image_api(output_topics)), width=200)
-                    col3.image(display_image(get_image_api(output_topics)), width=200)
-                    col4.image(display_image(get_image_api(output_topics)), width=200)
+
+                    # get keywords
+                    output_topics = get_keywords()
+                    col1.text('\n'.join(map(str, output_topics)))
+                    # get images
+                    col2.image(display_image(get_image_api(output_topics)),use_column_width=True)
+                    col3.image(display_image(get_image_api(output_topics)),use_column_width=True)
+
 
 
     # lucky button selected
@@ -201,32 +218,23 @@ with st.container():
             output = get_text_api()
             if output:
                 st.markdown(''' ##### your plotify story:  ''')
-                st.write(output)
+                st.write(''' ##''', output)
             else:
                 st.error("Hmm, i'm stumped for a plot, awks!😬")
 
         st.markdown(''' # ''')
+        st.markdown("##### your plot images & keywords:")
 
         # generates two more columns for keywords and image generation
         with st.container():
-            col1, col2 = st.columns([1,4])
-
-            # keyword generation
-            with col1:
-                if output:
-                    st.markdown(''' ##### your plot keywords: ''')
-                with col2:
-                    output_topics = get_keywords()
-                    st.markdown(", ".join(output_topics))
-
-            st.markdown(''' # ''')
-            # image generation
-            #with col2:
             if output:
                 with st.container():
-                    col1, col2, col3, col4 = st.columns(4)
-                    col1.markdown("##### your plot images:")
+                    col1, col2, col3 = st.columns([1,3,3])
                 with st.spinner("just grabbing a little extra inspiration..."):
-                    col2.image(display_image(get_image_api(output_topics)), width=200)
-                    col3.image(display_image(get_image_api(output_topics)), width=200)
-                    col4.image(display_image(get_image_api(output_topics)), width=200)
+
+                    # get keywords
+                    output_topics = get_keywords()
+                    col1.text('\n'.join(map(str, output_topics)))
+                    # get images
+                    col2.image(display_image(get_image_api(output_topics)),use_column_width=True)
+                    col3.image(display_image(get_image_api(output_topics)),use_column_width=True)
