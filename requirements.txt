@@ -6,3 +6,4 @@ streamlit
 Pillow
 requests
 replicate
+python-dotenv
