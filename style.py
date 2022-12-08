@@ -37,7 +37,7 @@ div.css-1ux96mu {
 
 /* reduce main body gap at the top */
 .css-18e3th9 {
-    padding: 3rem 2rem 2rem;
+    padding: 3rem 4rem 2rem;
 }
 
 
@@ -49,6 +49,7 @@ div.st-ci {
 div.st-by {
     color: white;
 }
+
 
 div.st-bz {
     color: white;
@@ -99,7 +100,7 @@ h2 {
     padding-top: 1rem;
     padding-right: 0.6rem
     line-height: 2rem;
-    text-align:center;
+    text-align:left;
     color:#af1102;
 }
 
