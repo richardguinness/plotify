@@ -1,0 +1,9 @@
+pandas
+numpy
+regex
+yake
+streamlit
+Pillow
+requests
+replicate
+python-dotenv

@@ -3,3 +3,6 @@ raw_data/
 .env
 SECRETS.toml
 .DS_Store
+.ipynb_checkpoints
+*~
+models/

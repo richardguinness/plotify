@@ -1,0 +1,11 @@
+numpy
+colorama
+tensorflow==2.7.4
+transformers==4.10.3
+datasets
+python-dotenv
+fastapi
+pytz
+uvicorn
+httpx
+pytest-asyncio

@@ -1,0 +1,31 @@
+numpy
+pandas
+# pytest
+# scikit-learn
+# yapf
+colorama
+
+# TF 2.7.4 available in base image
+# tensorflow==2.7.4
+transformers==4.10.3
+datasets
+
+# prevent bq 3+ db-dtypes package error when running training from bq
+# google-cloud-bigquery<3.0.0
+# google-cloud-storage
+# pyarrow
+
+# mlflow~=1.26.1
+
+python-dotenv
+#prefect<2
+#prefect[viz]
+#psycopg2-binary
+
+# API
+fastapi
+pytz
+uvicorn
+# tests
+httpx
+pytest-asyncio
