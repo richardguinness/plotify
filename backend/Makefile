@@ -25,7 +25,7 @@ run_workflow:
 	PREFECT__LOGGING__LEVEL=${PREFECT_LOG_LEVEL} python -m plotify.flow.main
 
 run_api:
-	uvicorn plotify_model.api.fast:app --reload
+	uvicorn api.fast:app --reload
 
 ##################### TESTS #####################
 default:

@@ -1,13 +1,32 @@
 version: '3'
 
+networks:
+  plotify-network:
+    external: true
 services:
   frontend:
-    build: frontend
+    container_name: plotify-frontend
+    image: plotify-frontend:dev
+    build: frontend/.
     ports:
       - 8501:8501
     depends_on:
       - backend
+    env_file:
+      - backend/.env
+    networks:
+      - plotify-network
+    command: "streamlit run app.py --server.port=8501 --server.address=0.0.0.0"
   backend:
-    build: backend
+    container_name: plotify-backend
+    image: plotify-backend:dev
+    build: backend/.
     ports:
-      - 8080:8080
+      - 8001:8001
+    environment:
+      - PORT=8001
+    env_file:
+      - frontend/.env
+    networks:
+      - plotify-network
+    command: "uvicorn api.fast:app --reload --port 8001 --host 0.0.0.0 "

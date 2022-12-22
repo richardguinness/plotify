@@ -6,3 +6,4 @@ SECRETS.toml
 .ipynb_checkpoints
 *~
 models/
+model/

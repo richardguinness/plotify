@@ -12,20 +12,15 @@ import replicate
 from dotenv import load_dotenv, find_dotenv
 import os
 
+envpath = find_dotenv()
+load_dotenv(envpath)
 
-# api to return text summary
-def get_image_api(prompt):
-    prompt = f'{output_topics}, realistic, digital illustration, no text'
-    envpath = find_dotenv()
-    load_dotenv(envpath)
-    replicate.Client()
-    model = replicate.models.get("stability-ai/stable-diffusion")
-    version = model.versions.get("0827b64897df7b6e8c04625167bbb275b9db0f14ab09e2454b9824141963c966")
-    image_url = version.predict(prompt=prompt)
-    print(image_url)
-    print(image_url[0])
-    return image_url
-
+API_HOST = os.environ.get('API_HOST')
+API_PORT = os.environ.get('API_PORT')
+API_ENDPOINT = os.environ.get('API_ENDPOINT')
+# breakpoint()
+api_endpoint = f'http://{API_HOST}:{API_PORT}/{API_ENDPOINT}'
+# api_endpoint = "https://plotifymodel-b4p33xwhra-ez.a.run.app/generate_summary"
 
 # function to return text keywords
 def get_keywords():
@@ -42,25 +37,17 @@ def get_keywords():
 
     return keyword_list
 
-
-
-
-# api to get images based on keywords
 def get_text_api():
 
-    url = "https://plotifymodel-b4p33xwhra-ez.a.run.app/generate_summary?"
+    param = {
+            'genre': input3,
+            'prompt': input1,
+            'max_length': 180
+            }
 
-    param = {'genre': input3,
-                'prompt': input1,
-                'max_length': 180}
-
-    # x = requests.get(url, params=param).json()
-    # print('get text api works')
-    # x['generate_summary'][0]['generated_text'].split('|>',1)[1]
-
-    output = requests.get(url, params=param).json()
+    output = requests.get(api_endpoint, params=param).json()
     output = output['generate_summary'][0]['generated_text']
-    # print('type(output)', type(output[0]['generated_text']))
+
     # Trim output to last occurance of full stop (if any)
     pos = output.rfind(".") # find position of last full stop
     output = output[:pos+1] if pos != -1 else output
@@ -73,6 +60,7 @@ def get_text_api():
     # Deal with occurences of floating letters
     output = output.replace(" s ", "'s ")
     output = output.replace(" t ", "'t ")
+    output = output.replace(" ll ", "'ll ")
     output = output.replace(" ve ", "'ve ")
     output = output.replace(" nt ", "'nt ")
     output = output.replace(" re ", "'re ")
@@ -80,10 +68,7 @@ def get_text_api():
     # Remove space (from Sarah. Orig punct list: ?.!,")
     output = re.sub(r'\s([!?.,;-](?:\s|$))', r'\1', output)
 
-    # output = [{'generated_text':output}]
-
     return output
-
 
 # function to display images
 def display_image(image_url):
@@ -97,9 +82,17 @@ def display_image(image_url):
 #   print('display image works')
   return image
 
-
-
-
+def get_image_api(prompt):
+    prompt = f'{output_topics}, realistic, digital illustration, no text'
+    envpath = find_dotenv()
+    load_dotenv(envpath)
+    replicate.Client()
+    model = replicate.models.get("stability-ai/stable-diffusion")
+    version = model.versions.get("0827b64897df7b6e8c04625167bbb275b9db0f14ab09e2454b9824141963c966")
+    image_url = version.predict(prompt=prompt)
+    print(image_url)
+    print(image_url[0])
+    return image_url
 
 ## SITE CONFIG
 
@@ -112,8 +105,6 @@ st.set_page_config(
 
 
 st.markdown(get_css(), unsafe_allow_html=True)
-
-
 
 ## SIDEBAR
 

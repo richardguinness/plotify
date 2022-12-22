@@ -10,8 +10,8 @@ import numpy as np
 # VALIDATION_DATASET_SIZE = os.environ.get("VALIDATION_DATASET_SIZE")
 # CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE"))
 # LOCAL_DATA_PATH = os.path.expanduser(os.environ.get("LOCAL_DATA_PATH"))
-LOCAL_REGISTRY_PATH = os.path.expanduser(os.environ.get("LOCAL_REGISTRY_PATH"))
-MODEL_REF = os.environ.get("MODEL_REF")
+LOCAL_REGISTRY_PATH = os.environ.get("LOCAL_REGISTRY_PATH")
+# MODEL_REF = os.environ.get("MODEL_REF")
 
 REMOTE_MODEL_TARGET = os.environ.get("REMOTE_MODEL_TARGET")
 

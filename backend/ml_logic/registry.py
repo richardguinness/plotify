@@ -1,4 +1,4 @@
-from ml_logic.params import LOCAL_REGISTRY_PATH, REMOTE_MODEL_TARGET, MODEL_REF
+from ml_logic.params import LOCAL_REGISTRY_PATH, REMOTE_MODEL_TARGET #, MODEL_REF
 
 # import mlflow
 # from mlflow.tracking import MlflowClient
@@ -13,7 +13,64 @@ from colorama import Fore, Style
 
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer, pipeline
 
-model_directory = LOCAL_REGISTRY_PATH #, MODEL_REF)
+# model_directory = LOCAL_REGISTRY_PATH #, MODEL_REF)
+path_model = os.path.join(LOCAL_REGISTRY_PATH, "model")
+path_tokenizer = os.path.join(LOCAL_REGISTRY_PATH, "tokenizer")
+
+
+def load_tokenizer():
+    # New Tokenizer effort based on https://data-dive.com/finetune-german-gpt2-on-tpu-transformers-tensorflow-for-text-generation-of-reviews
+
+    try:
+        tokenizer = GPT2Tokenizer.from_pretrained(
+            path_tokenizer
+        )
+
+        return tokenizer
+    except:
+        print("Exception while loading tokenizer")
+        return None
+
+
+def build_pipeline():
+    # Load model into memory
+    # load tokenizer
+    # build pipeline
+
+    try:
+        print(Fore.BLUE + "\nLoad model from local disk..." + Style.RESET_ALL)
+
+        model = TFGPT2LMHeadModel.from_pretrained(path_model)
+
+    except:
+        print("Exception while loading model")
+
+    finally:
+        print("\n✅ model loaded from disk")
+
+    try:
+        print(Fore.BLUE + "\nLoad tokenizer..." + Style.RESET_ALL)
+        tokenizer = load_tokenizer()
+
+    except:
+        print("Exception while loading tokenizer")
+
+    finally:
+        print("\n✅ tokenizer loaded")
+
+    try:
+        print(Fore.BLUE + "\nInstantiating pipeline..." + Style.RESET_ALL)
+        new_pipeline = pipeline(
+            "text-generation",
+            model=model,
+            tokenizer=tokenizer
+        )
+        print("\n✅ pipeline instantiated")
+
+    except:
+        print("Exception while instantiating pipeline")
+
+    return new_pipeline
 
 # def download_model():
 #     # Load model from GCP bucket
@@ -36,77 +93,6 @@ model_directory = LOCAL_REGISTRY_PATH #, MODEL_REF)
 #     except:
 #         print(f"\n❌ Error downloading model")
 #         return None
-
-def load_tokenizer():
-    # New Tokenizer effort based on https://data-dive.com/finetune-german-gpt2-on-tpu-transformers-tensorflow-for-text-generation-of-reviews
-
-    try:
-        # MAX_TOKENS = 512 # MAYBE THIS CAN BE OPTIMISED?!
-
-
-
-        # EOS_TOKEN = "<|endoftext|>"
-        # PAD_TOKEN = "<|pad|>"
-
-        # # this will download and initialize the pre trained tokenizer
-        # # tokenizer = AutoTokenizer.from_pretrained(
-        # tokenizer = GPT2Tokenizer.from_pretrained(
-        #     'gpt2', # = eg 'gpt2'
-        #     eos_token=EOS_TOKEN,
-        #     pad_token=PAD_TOKEN,
-        #     max_length=MAX_TOKENS,
-        #     is_split_into_words=True,
-        # )
-        # tokenizer.add_tokens(BOS_TOKENS, special_tokens=True)
-        path_tokenizer = model_directory + "-tokenizer"
-        tokenizer = GPT2Tokenizer.from_pretrained(
-            path_tokenizer
-        )
-
-        return tokenizer
-    except:
-        print("Exception while loading tokenizer")
-        return None
-
-
-def build_pipeline():
-    # Load model into memory
-    # load tokenizer
-    # build pipeline
-
-    try:
-        print(Fore.BLUE + "\nLoad model from local disk..." + Style.RESET_ALL)
-        # print(LOCAL_REGISTRY_PATH, MODEL_REF, os.path.join(LOCAL_REGISTRY_PATH, MODEL_REF))
-
-        # model_directory = "/tmp/model/model_hf" #os.path.join(LOCAL_REGISTRY_PATH, MODEL_REF)
-        print(f"- path: {model_directory}")
-        model = TFGPT2LMHeadModel.from_pretrained(model_directory)
-        print("\n✅ model loaded from disk")
-
-    except:
-        print("Exception while loading model")
-
-    try:
-        print(Fore.BLUE + "\nLoad tokenizer..." + Style.RESET_ALL)
-        tokenizer = load_tokenizer()
-        print("\n✅ tokenizer loaded")
-
-    except:
-        print("Exception while loading tokenizer")
-
-    try:
-        print(Fore.BLUE + "\nInstantiating pipeline..." + Style.RESET_ALL)
-        new_pipeline = pipeline(
-            "text-generation",
-            model=model,
-            tokenizer=tokenizer
-        )
-        print("\n✅ pipeline instantiated")
-
-    except:
-        print("Exception while instantiating pipeline")
-
-    return new_pipeline
 
 # def load_model(save_copy_locally=False) -> Model:
 #     """
