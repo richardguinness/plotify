@@ -18,7 +18,7 @@ load_dotenv(envpath)
 API_HOST = os.environ.get('API_HOST')
 API_PORT = os.environ.get('API_PORT')
 API_ENDPOINT = os.environ.get('API_ENDPOINT')
-# breakpoint()
+
 api_endpoint = f'http://{API_HOST}:{API_PORT}/{API_ENDPOINT}'
 # api_endpoint = "https://plotifymodel-b4p33xwhra-ez.a.run.app/generate_summary"
 

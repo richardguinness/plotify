@@ -13,10 +13,10 @@ services:
     depends_on:
       - backend
     env_file:
-      - backend/.env
+      - frontend/.env
     networks:
       - plotify-network
-    command: "streamlit run app.py --server.port=8501 --server.address=0.0.0.0"
+    command: "streamlit run app.py --server.port=8501 --server.address=0.0.0.0" # --server.enableCORS=false --server.enableXsrfProtection=false"
   backend:
     container_name: plotify-backend
     image: plotify-backend:dev
@@ -26,7 +26,8 @@ services:
     environment:
       - PORT=8001
     env_file:
-      - frontend/.env
+      - backend/.env
     networks:
       - plotify-network
     command: "uvicorn api.fast:app --reload --port 8001 --host 0.0.0.0 "
+    # command: "uvicorn api.fast:app --reload --port $PORT --host 0.0.0.0 "
