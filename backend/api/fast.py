@@ -9,9 +9,7 @@ import pandas as pd
 
 import re
 
-# from plotify_model.interface.main import preprocess_features
 from ml_logic.registry import build_pipeline
-from interface.main import generate_summary
 
 app = FastAPI()
 # download model
