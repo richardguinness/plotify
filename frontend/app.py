@@ -20,12 +20,13 @@ API_PORT = os.environ.get('API_PORT')
 API_ENDPOINT = os.environ.get('API_ENDPOINT')
 
 api_endpoint = f'http://{API_HOST}:{API_PORT}/{API_ENDPOINT}'
-# api_endpoint = "https://plotifymodel-b4p33xwhra-ez.a.run.app/generate_summary"
 
 # function to return text keywords
-def get_keywords():
+def get_keywords(text):
+    """
+    Extracts keywords from text 
+    """
     kw_extractor = yake.KeywordExtractor()
-    text = output
     language = "en"
     max_ngram_size = 1
     deduplication_threshold = 0.25
@@ -40,9 +41,9 @@ def get_keywords():
 def get_text_api():
 
     param = {
-            'genre': input3,
-            'prompt': input1,
-            'max_length': 180
+            'genre': input_genre,
+            'prompt': input_prompt,
+            'max_length': 40
             }
 
     output = requests.get(api_endpoint, params=param).json()
@@ -124,10 +125,10 @@ with st.sidebar.form("no_user_input_form"):
 with st.sidebar.form("user_input_form"):
 
     # Input 1: Text Box: prompt to input short text, limit
-    input1 = st.text_area('got the start of an idea?', height=120, max_chars = 150)
+    input_prompt = st.text_area('got the start of an idea?', height=120, max_chars = 150)
 
     # Input 2: Radio buttons: choose genre
-    input2 = st.radio('select your genre:',
+    opt_genre = st.radio('select your genre:',
                         ('Action 🤯',
                         'Comedy 🤣',
                         'Crime 👮🏽‍♀️',
@@ -146,8 +147,8 @@ with st.sidebar.form("user_input_form"):
               'Mystery 😵‍💫': 'mystery',
               'Romance 😘': 'romance'}
 
-    if input2:
-        input3 = genre_dict.get(input2)
+    if opt_genre:
+        input_genre = genre_dict.get(opt_genre)
 
     # Button 2: Start API to return story with prompts + genre
     submitted_inputs = st.form_submit_button("GENERATE ME A STORY...")
@@ -161,12 +162,8 @@ with st.sidebar.form("user_input_form"):
 image = Image.open("streamlit_assets/plotify_pageheadertext.png")
 st.image(image,  use_column_width=None)
 
-
-
 # Output 1: Summary Text
 st.markdown(''' # ''')
-
-
 
 with st.container():
 
@@ -193,18 +190,16 @@ with st.container():
                 with st.spinner("just grabbing a little extra inspiration..."):
 
                     # get keywords
-                    output_topics = get_keywords()
+                    output_topics = get_keywords(output)
                     col1.text('\n'.join(map(str, output_topics)))
                     # get images
                     col2.image(display_image(get_image_api(output_topics)),use_column_width=True)
                     col3.image(display_image(get_image_api(output_topics)),use_column_width=True)
 
-
-
     # lucky button selected
     if submitted_lucky:
-        input1 = ''
-        input2 = ''
+        input_prompt = ''
+        input_genre = ''
 
         # calls the first api to generate the output text
         with st.spinner("hold the pen, we're doing some plotting..."):
@@ -226,7 +221,7 @@ with st.container():
                 with st.spinner("just grabbing a little extra inspiration..."):
 
                     # get keywords
-                    output_topics = get_keywords()
+                    output_topics = get_keywords(output)
                     col1.text('\n'.join(map(str, output_topics)))
                     # get images
                     col2.image(display_image(get_image_api(output_topics)),use_column_width=True)

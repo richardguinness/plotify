@@ -1,8 +1,0 @@
-README.md
-setup.py
-plotify_model.egg-info/PKG-INFO
-plotify_model.egg-info/SOURCES.txt
-plotify_model.egg-info/dependency_links.txt
-plotify_model.egg-info/not-zip-safe
-plotify_model.egg-info/requires.txt
-plotify_model.egg-info/top_level.txt
