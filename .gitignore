@@ -4,6 +4,7 @@ raw_data/
 SECRETS.toml
 .DS_Store
 .ipynb_checkpoints
+__pycache__
 *~
 models/
 model/
