@@ -1,4 +1,3 @@
-import os
 import warnings
 import sys
 
@@ -21,6 +20,7 @@ mlflow.set_tracking_uri(mlflow_uri)
 
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
+
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
@@ -56,8 +56,8 @@ if __name__ == "__main__":
     alpha = float(sys.argv[1]) if len(sys.argv) > 1 else 0.5
     l1_ratio = float(sys.argv[2]) if len(sys.argv) > 2 else 0.5
 
-    with mlflow.start_run(experiment_id='2'):
-    # with mlflow.start_run():
+    # with mlflow.start_run(experiment_id='3'):
+    with mlflow.start_run():
         lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=42)
         lr.fit(train_x, train_y)
 

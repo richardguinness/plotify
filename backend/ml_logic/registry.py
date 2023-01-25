@@ -6,6 +6,7 @@ from colorama import Fore, Style
 
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer, pipeline
 
+
 def build_pipeline():
     """
     Load tokenizer & model
