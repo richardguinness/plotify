@@ -26,6 +26,9 @@ The app consists of a frontend web application and a backend system where a Larg
 
 The frontend and backend are each built as Docker containers. The interaction between these Docker containers is coorindated by Docker Compose. This means it would be extremely straightforward to set the system up to run on new hardware (on the basis the Docker images are available on a publically available registry which they are not presently!).
 
+![plotify_architecture.png|300](readme_assets/plotify_architecture.png)
+_Screenshot of Plotify's StreamLit frontend_
+
 ## Data Sources
 
 Data sources:
@@ -47,7 +50,11 @@ Multiple issues were encountered in fine-tuning, of note:
 
 Having overcome these, we fine-tuned the model using a Google Colab provided NVIDIA A100. The process took about 30 minutes until `val_loss` stabilised and training was stopped early.
 
+## Improvements
 
+- Decrease text generation time. Presently it takes about 45 seconds to generate 150 tokens. Using JIT compilation it should be possible to reduce significantly (sub 5 seconds should be possible for 2nd and subsequent requests).
+- Bring image generation on board: instead of relying on a 3rd party.
+- Implement fine-tuning via a new admin pane within the front-end. This would allow fine-tuning on different corpuses of text.
 
 ## Resources
 
