@@ -27,7 +27,7 @@ The app consists of a frontend web application and a backend system where a Larg
 The frontend and backend are each built as Docker containers. The interaction between these Docker containers is coorindated by Docker Compose. This means it would be extremely straightforward to set the system up to run on new hardware (on the basis the Docker images are available on a publically available registry which they are not presently!).
 
 ![plotify_architecture.png|300](readme_assets/plotify_architecture.png)
-_Screenshot of Plotify's StreamLit frontend_
+_Illustration of Plotify's current architecture_
 
 ## Data Sources
 
