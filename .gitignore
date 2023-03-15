@@ -6,6 +6,5 @@ SECRETS.toml
 .ipynb_checkpoints
 __pycache__
 *~
-models/
-model/
-models_archive/
+backend/models/
+notebooks/data
