@@ -13,6 +13,9 @@ The approach we used was:
 - Identify a large body of text in the format of "summaries" which represent a story.
 - Use this body of text to build a program that will take a few words or a sentence, and then output a few more sentences "in the style of" a summary.
 
+![frontend_screenshot.png|300](readme_assets/frontend_screenshot.png)
+_Screenshot of Plotify's StreamLit frontend_
+
 ## Architecture
 
 The app consists of a frontend web application and a backend system where a Large Language model (GPT2) is loaded.
